@@ -1,5 +1,3 @@
-
-
 //
 //  main.cpp
 //  advanced-nenokku
@@ -64,8 +62,8 @@ void add(const int char_code) {
 bool find() {
     int state = 0;
     character = getchar();
+    int code;
     while (character != '\n' && character != EOF) {
-        int code;
         if ('A' <= character && character <= 'Z') {
             code = character - 'A';
         } else {
@@ -73,6 +71,9 @@ bool find() {
         }
         state = states[state].next[code];
         if (state == 0) {
+            while (character != '\n' && character != EOF) {
+                character = getchar();
+            }
             return false;
         }
         character = getchar();
@@ -82,8 +83,8 @@ bool find() {
 
 void add() {
     character = getchar();
+    int code;
     while (character != '\n' && character != EOF) {
-        int code;
         if ('A' <= character && character <= 'Z') {
             code = character - 'A';
         } else {
@@ -98,7 +99,8 @@ int main() {
     states.push_back(state(0, -1));
 
     char command;
-    while (1) {
+    character = 'a';
+    while (character != EOF) {
         command = getchar();
         character = getchar();
         if (command == '?') {
@@ -107,14 +109,8 @@ int main() {
             } else {
                 printf("NO\n");
             }
-            while (character != '\n' && character != EOF) {
-                character = getchar();
-            }
         } else {
             add();
-        }
-        if (character == EOF) {
-            break;
         }
     }
 
